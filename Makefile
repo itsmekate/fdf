@@ -12,7 +12,7 @@
 
 NAME = a.out
 
-SRCS = main.c libft/libft.a
+SRCS = main.c libft/libft.a draw.c read.c
 
 LIB = -L libft/ -lft
 OBJ = $(SRCS:.c=.o)

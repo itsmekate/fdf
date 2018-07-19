@@ -30,6 +30,7 @@ typedef	struct	s_ptr
 	void	*mlx_ptr;
 	void	*wdw_ptr;
 	int		**matrix;
+	int		size;
 }				t_ptr;
 
 typedef	struct	s_coord
@@ -37,6 +38,11 @@ typedef	struct	s_coord
 	int			x;
 	int			y;
 	int			z;
+	wchar_t	color;
 }				t_coord;
+
+
+t_ptr			read_fdf(char **argv, t_ptr fdf);
+void			draw_fdf(t_ptr fdf);
 
 #endif
