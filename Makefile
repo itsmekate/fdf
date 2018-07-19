@@ -25,9 +25,7 @@ libft:
 	make -C ./libft
 
 $(NAME): libft $(OBJ)
-	gcc $(CFLAGS) $(OBJ) -o  $(NAME)  $(LIB) -I ./
-	# cc -c -o  $@ $< -I ./libft  -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
-	# cc -I /usr/loca/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit $(CFLAGS) -c -o  $@ $< -I ./libft
+	gcc $(CFLAGS) $(OBJ) -o  $(NAME)  $(LIB) -I ./ -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 clean:
 	/bin/rm -f $(OBJ)
@@ -41,7 +39,7 @@ re: fclean all
 
 %.o: %.c
 	gcc $(CFLAGS) -c -o  $@ $< -I ./libft
-	# cc -c -o  $@ $< -I ./libft  -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
+	 # -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: all clean fclean re libft
 
