@@ -25,24 +25,35 @@
 
 // }					t_fdf;
 
-typedef	struct	s_ptr
+typedef	struct		s_ptr
 {
-	void	*mlx_ptr;
-	void	*wdw_ptr;
-	int		**matrix;
-	int		size;
-}				t_ptr;
+	void			*mlx_ptr;
+	void			*wdw_ptr;
+	int				**matrix;
+	int				size;
+	double			Rx;
+	double			Ry;
+	double			Rz;
+}					t_ptr;
 
-typedef	struct	s_coord
+typedef	struct		s_coord
 {
-	int			x;
-	int			y;
-	int			z;
-	wchar_t	color;
-}				t_coord;
+	int				x;
+	int				y;
+	int				z;
+	wchar_t			color;
+}					t_coord;
+
+// typedef struct 		s_lst
+// {
+// 	char			*str;
+// 	struct s_lst	*next;
+// }					t_lst;
 
 
-t_ptr			read_fdf(char **argv, t_ptr fdf);
-void			draw_fdf(t_ptr fdf);
+void				read_fdf(char **argv, t_ptr *fdf);
+void				draw_fdf(t_ptr fdf);
+int 				exit_x(void *par);
+void				free_matrix(int **matrix);
 
 #endif

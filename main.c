@@ -12,6 +12,13 @@
 
 #include "fdf.h"
 
+int exit_x(void *par)
+{
+	par = NULL;
+	exit(1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_ptr	*fdf;
@@ -19,7 +26,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	fdf = (t_ptr*)malloc(sizeof(t_ptr));
-	*fdf = read_fdf(argv, *fdf);
+	read_fdf(argv, fdf);
+	// system("leaks a.out");
 	draw_fdf(*fdf);
 	return (0);
 }

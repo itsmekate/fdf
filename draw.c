@@ -1,5 +1,24 @@
 #include "fdf.h"
 
+t_coord	change_coords(t_coord c, t_ptr fdf)
+{
+	t_coord	c0;
+	t_coord	c1;
+	t_coord	c2;
+
+	c0.x = c.x;
+	c0.y = c.y * cos(fdf.Rx) + c.z * sin(fdf.Rx);
+	c0.z = c.z * cos(fdf.Rx) - c.y * sin(fdf.Rx);
+	c1.x = c0.x * cos(fdf.Ry) - c0.z * sin(fdf.Ry);
+	c1.y = c0.y;
+	c1.z = c0.z * cos(fdf.Ry) + c0.x * sin(fdf.Ry);
+	c2.x = c1.x * cos(fdf.Rz) + c1.y * sin(fdf.Rz);
+	c2.y = c1.y * cos(fdf.Rz) - c1.x * sin(fdf.Rz);
+	c2.color = 0xFFFFFFF;
+	// printf("%f %f\n", fdf.Rx, fdf.Ry);
+	return (c2);
+}
+
 void  draw_line(t_ptr fdf, t_coord c0, t_coord c1)
 {
 	t_coord d;
@@ -33,49 +52,47 @@ void	draw_fdf(t_ptr fdf)
 {
 	int i = 0;
 	int j = 0;
+	int change;
 	t_coord c0;
 	t_coord c1;
 
-	c0.color = 0xFFF000;
-	c1.color = 0xFFFFFFF;
+	fdf.Rx = 0;
+	fdf.Ry = 0;
+	fdf.Rz = 0.3;
+	change = fdf.size * 3;
 	fdf.mlx_ptr = mlx_init();
-	fdf.wdw_ptr = mlx_new_window(fdf.mlx_ptr, 800, 600, "FdF");
-	printf("%d\n", fdf.size);
-	while (i < fdf.size - 1)
+	fdf.wdw_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 1200, "FdF");
+	while (i <= fdf.size - 1)
 	{
 		j = 0;
-		c0.x = i * 50;
-		c1.x = i * 50;
-		while (j < fdf.size - 1)
+		c0.x = i * change + 100;
+		c1.x = i * change + 100;
+		while (j <= fdf.size - 1)
 		{
-			c0.y = j * 50;
-			c1.y = (j * 50) + 50;
-			draw_line(fdf, c0, c1);
+			c0.y = j * change + 100;
+			c1.y = (j * change) + change + 100;
+			if (fdf.size-1 != j)
+				draw_line(fdf, change_coords(c0, fdf), change_coords(c1, fdf));
 			j++;
 		}
 		i++;
 	}
 	i = 0;
-	while (i < fdf.size - 1)
+	while (i <= fdf.size - 1)
 	{
 		j = 0;
-		c0.y = i * 50;
-		c1.y = i * 50;
-		while (j < fdf.size - 1)
+		c0.y = i * change + 100;
+		c1.y = i * change + 100;
+		while (j <= fdf.size - 1)
 		{
-			c0.x = j * 50;
-			c1.x = (j * 50) + 50;
-			draw_line(fdf, c0, c1);
+			c0.x = j * change + 100;
+			c1.x = (j * change) + change + 100;
+			if (fdf.size-1 != j)
+				draw_line(fdf, change_coords(c0, fdf), change_coords(c1, fdf));
 			j++;
 		}
 		i++;
 	}
-	// c0.x = 10;
-	// c1.x = 100;
-	// c0.y = 50;
-	// c1.y = 250;
-	// c0.color = 0xFFFFFFF;
-	// c1.color = 0xFFFFFFF;
-	// draw_line(fdf, c0, c1);
+	mlx_hook(fdf.wdw_ptr, 17, 1L << 17, exit_x, (void*)0);
 	mlx_loop(fdf.mlx_ptr);
 }
