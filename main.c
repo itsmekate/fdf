@@ -12,12 +12,37 @@
 
 #include "fdf.h"
 
-int exit_x(void *par)
+int		deal_key(int key, t_ptr	*fdf)
 {
-	par = NULL;
-	exit(1);
+	fdf = (t_ptr*)fdf;
+	if (key == 53)
+	{
+		exit(1);
+		return (0);
+	}
+	if (key == 12)
+	{
+		fdf->Rz = 0.3;
+	}
 	return (0);
 }
+
+// int exit_x(void *par)
+// {
+// 	par = NULL;
+// 	exit(1);
+// 	return (0);
+	// if (n == )
+	// {
+	// 	exit(1);
+	// 	return (0);
+	// }
+	// else if (n == )
+	// {
+	// 	/* code */
+	// }
+	
+// }
 
 int	main(int argc, char **argv)
 {

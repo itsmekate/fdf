@@ -55,5 +55,6 @@ void				read_fdf(char **argv, t_ptr *fdf);
 void				draw_fdf(t_ptr fdf);
 int 				exit_x(void *par);
 void				free_matrix(int **matrix);
+int					deal_key(int key, t_ptr *fdf);
 
 #endif

@@ -81,7 +81,7 @@ void	from_list_to_fdf(t_ptr *fdf, t_list *list)
 
 	tmp = list;
 	fdf->size = 0;
-	fdf->matrix = (int**)malloc(sizeof(int*)* ft_list_size(tmp));
+	fdf->matrix = (int**)malloc(sizeof(int*)* ft_list_size(tmp) + 1);
 	while (tmp)
 	{
 		fdf->size = add_line((char*)tmp->content, fdf);
@@ -111,5 +111,5 @@ void	read_fdf(char **argv, t_ptr *fdf)
 	}
 	fdf->size = 0;
 	from_list_to_fdf(fdf, head);
-	// ft_list_clear(head);
+	ft_list_clear(&head);
 }

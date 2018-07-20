@@ -15,7 +15,6 @@ t_coord	change_coords(t_coord c, t_ptr fdf)
 	c2.x = c1.x * cos(fdf.Rz) + c1.y * sin(fdf.Rz);
 	c2.y = c1.y * cos(fdf.Rz) - c1.x * sin(fdf.Rz);
 	c2.color = 0xFFFFFFF;
-	// printf("%f %f\n", fdf.Rx, fdf.Ry);
 	return (c2);
 }
 
@@ -58,8 +57,8 @@ void	draw_fdf(t_ptr fdf)
 
 	fdf.Rx = 0;
 	fdf.Ry = 0;
-	fdf.Rz = 0.3;
-	change = fdf.size * 3;
+	fdf.Rz = 0.1;
+	change = fdf.size * 5;
 	fdf.mlx_ptr = mlx_init();
 	fdf.wdw_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 1200, "FdF");
 	while (i <= fdf.size - 1)
@@ -93,6 +92,6 @@ void	draw_fdf(t_ptr fdf)
 		}
 		i++;
 	}
-	mlx_hook(fdf.wdw_ptr, 17, 1L << 17, exit_x, (void*)0);
+	mlx_key_hook(fdf.wdw_ptr, deal_key, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 }
