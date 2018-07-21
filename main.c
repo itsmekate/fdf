@@ -20,29 +20,54 @@ int		deal_key(int key, t_ptr	*fdf)
 		exit(1);
 		return (0);
 	}
-	if (key == 12)
+	if (key == 18)
 	{
-		fdf->Rz = 0.3;
+		fdf->Rz += 0.1;
+		draw_map(*fdf);
 	}
+	if (key == 19)
+	{
+		fdf->Rx += 0.1;
+		draw_map(*fdf);
+	}
+	if (key == 20)
+	{
+		fdf->Ry += 0.1;
+		draw_map(*fdf);
+	}
+	if (key == 0)
+	{
+		fdf->right += 10;
+		draw_map(*fdf);
+	}
+	else if (key == 2)
+	{
+		fdf->right -= 10;
+		draw_map(*fdf);
+	}
+	else if (key == 13)
+	{
+		fdf->top -= 10;
+		draw_map(*fdf);
+	}
+	else if (key == 1)
+	{
+		fdf->top += 10;
+		draw_map(*fdf);
+	}
+	else if (key == 24)
+	{
+		fdf->zoom += 10;
+		draw_map(*fdf);
+	}
+	else if (key == 27)
+	{
+		fdf->zoom -= 10;
+		draw_map(*fdf);
+	}
+	// mlx_put_image_to_window(fdf->mlx_ptr, fdf->wdw_ptr, fdf->img_ptr, 0, 0);
 	return (0);
 }
-
-// int exit_x(void *par)
-// {
-// 	par = NULL;
-// 	exit(1);
-// 	return (0);
-	// if (n == )
-	// {
-	// 	exit(1);
-	// 	return (0);
-	// }
-	// else if (n == )
-	// {
-	// 	/* code */
-	// }
-	
-// }
 
 int	main(int argc, char **argv)
 {

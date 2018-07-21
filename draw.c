@@ -14,7 +14,7 @@ t_coord	change_coords(t_coord c, t_ptr fdf)
 	c1.z = c0.z * cos(fdf.Ry) + c0.x * sin(fdf.Ry);
 	c2.x = c1.x * cos(fdf.Rz) + c1.y * sin(fdf.Rz);
 	c2.y = c1.y * cos(fdf.Rz) - c1.x * sin(fdf.Rz);
-	c2.color = 0xFFFFFFF;
+	c2.color = 0xFFFFFF;
 	return (c2);
 }
 
@@ -30,9 +30,12 @@ void  draw_line(t_ptr fdf, t_coord c0, t_coord c1)
 	signx = c0.x < c1.x ? 1 : -1;
 	signy = c0.y < c1.y ? 1 : -1;
 	error = d.x - d.y;
+	// put_pixel_image(&fdf, c1.x, c1.y, c1.color);
 	mlx_pixel_put(fdf.mlx_ptr, fdf.wdw_ptr, c1.x, c1.y, c0.color);
 	while (c0.x != c1.x || c0.y != c1.y)
 	{
+		// printf("%d %d\n",c1.x, c1.y );
+		// put_pixel_image(&fdf, c1.x, c1.y, c1.color);
 		mlx_pixel_put(fdf.mlx_ptr, fdf.wdw_ptr, c0.x, c0.y, c1.color);
 		if (error * 2 > -d.y)
 		{
@@ -47,29 +50,40 @@ void  draw_line(t_ptr fdf, t_coord c0, t_coord c1)
 	}
 }
 
-void	draw_fdf(t_ptr fdf)
+void	clear_map(t_ptr fdf)
+{
+	int k = 0;
+	int l;
+	while (k < 1200)
+	{
+		l = 0;
+		while (l < 1200)
+		{
+			// put_pixel_image(&fdf, k, l, 0);
+			mlx_pixel_put(fdf.mlx_ptr, fdf.wdw_ptr, k, l, 0);
+			l++;
+		}
+		k++;
+	}
+}
+
+void	draw_map(t_ptr fdf)
 {
 	int i = 0;
 	int j = 0;
-	int change;
 	t_coord c0;
 	t_coord c1;
 
-	fdf.Rx = 0;
-	fdf.Ry = 0;
-	fdf.Rz = 0.1;
-	change = fdf.size * 5;
-	fdf.mlx_ptr = mlx_init();
-	fdf.wdw_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 1200, "FdF");
+	clear_map(fdf);
 	while (i <= fdf.size - 1)
 	{
 		j = 0;
-		c0.x = i * change + 100;
-		c1.x = i * change + 100;
+		c0.x = i * fdf.zoom + fdf.right;
+		c1.x = i * fdf.zoom + fdf.right;
 		while (j <= fdf.size - 1)
 		{
-			c0.y = j * change + 100;
-			c1.y = (j * change) + change + 100;
+			c0.y = j * fdf.zoom + fdf.top;
+			c1.y = (j * fdf.zoom) + fdf.zoom + fdf.top;
 			if (fdf.size-1 != j)
 				draw_line(fdf, change_coords(c0, fdf), change_coords(c1, fdf));
 			j++;
@@ -80,18 +94,34 @@ void	draw_fdf(t_ptr fdf)
 	while (i <= fdf.size - 1)
 	{
 		j = 0;
-		c0.y = i * change + 100;
-		c1.y = i * change + 100;
+		c0.y = i * fdf.zoom + fdf.top;
+		c1.y = i * fdf.zoom + fdf.top;
 		while (j <= fdf.size - 1)
 		{
-			c0.x = j * change + 100;
-			c1.x = (j * change) + change + 100;
+			c0.x = j * fdf.zoom + fdf.right;
+			c1.x = (j * fdf.zoom) + fdf.zoom + fdf.right;
 			if (fdf.size-1 != j)
 				draw_line(fdf, change_coords(c0, fdf), change_coords(c1, fdf));
 			j++;
 		}
 		i++;
 	}
+}
+
+void	draw_fdf(t_ptr fdf)
+{
+	fdf.Rx = 0;
+	fdf.Ry = 0;
+	fdf.Rz = 0.1;
+	fdf.right = 10;
+	fdf.top = 10;
+	fdf.zoom = 20;
+	fdf.mlx_ptr = mlx_init();
+	fdf.wdw_ptr = mlx_new_window(fdf.mlx_ptr, 1200, 1200, "FdF");
+	// fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, 1200, 1200);
+	// printf("%d %d\n", 10, fdf.size);
+	draw_map(fdf);
+	// mlx_put_image_to_window(fdf.mlx_ptr, fdf.wdw_ptr, fdf.img_ptr, 0, 0);
 	mlx_key_hook(fdf.wdw_ptr, deal_key, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 }

@@ -29,11 +29,15 @@ typedef	struct		s_ptr
 {
 	void			*mlx_ptr;
 	void			*wdw_ptr;
+	void			*img_ptr;
 	int				**matrix;
 	int				size;
 	double			Rx;
 	double			Ry;
 	double			Rz;
+	int				top;
+	int				right;
+	int				zoom;
 }					t_ptr;
 
 typedef	struct		s_coord
@@ -56,5 +60,7 @@ void				draw_fdf(t_ptr fdf);
 int 				exit_x(void *par);
 void				free_matrix(int **matrix);
 int					deal_key(int key, t_ptr *fdf);
+void				draw_map(t_ptr fdf);
+void				put_pixel_image(t_ptr *fdf, int x, int y, int color);
 
 #endif

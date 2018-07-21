@@ -12,12 +12,12 @@
 
 NAME = a.out
 
-SRCS = main.c libft/libft.a draw.c read.c
+SRCS = main.c libft/libft.a draw.c read.c image.c
 
 LIB = -L libft/ -lft
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 all: $(NAME)
 
@@ -39,7 +39,6 @@ re: fclean all
 
 %.o: %.c
 	gcc $(CFLAGS) -c -o  $@ $< -I ./libft
-	 # -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 
 .PHONY: all clean fclean re libft
 

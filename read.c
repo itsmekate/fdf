@@ -46,21 +46,17 @@ t_list	*add_to_list(char *str)
 	return (tmp);
 }
 
-int		add_line(char *tmp, t_ptr *fdf)
+int		add_line(char *tmp, t_ptr *fdf, int c)
 {
-	int 	i;
 	int 	j;
 	char	**split;
 
-	i = 0;
 	j = 0;
 	split = ft_strsplit(tmp, ' ');
-	while (fdf->matrix[i])
-		i++;
-	fdf->matrix[i] = (int*)malloc(sizeof(int)*array_size(split));
+	fdf->matrix[c] = (int*)malloc(sizeof(int) * array_size(split));
 	while (split[j])
 	{
-		fdf->matrix[i][j] = ft_atoi(split[j]);
+		fdf->matrix[c][j] = ft_atoi(split[j]);
 		j++;
 	}
 	if (fdf->size && j != fdf->size)
@@ -78,13 +74,16 @@ int		add_line(char *tmp, t_ptr *fdf)
 void	from_list_to_fdf(t_ptr *fdf, t_list *list)
 {
 	t_list	*tmp;
+	int		c;
 
 	tmp = list;
 	fdf->size = 0;
-	fdf->matrix = (int**)malloc(sizeof(int*)* ft_list_size(tmp) + 1);
+	c = 0;
+	fdf->matrix = (int**)malloc(sizeof(int*) * ft_list_size(tmp));
 	while (tmp)
 	{
-		fdf->size = add_line((char*)tmp->content, fdf);
+		fdf->size = add_line((char*)tmp->content, fdf, c);
+		c++;
 		tmp = tmp->next;
 	}
 }
@@ -98,7 +97,6 @@ void	read_fdf(char **argv, t_ptr *fdf)
 
 	fd = open(argv[1], O_RDONLY);
 	list = (t_list*)malloc(sizeof(t_list));
-	
 	get_next_line(fd, &tmp);
 	list = add_to_list(tmp);
 	head = list;
