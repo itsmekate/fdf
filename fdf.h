@@ -38,6 +38,8 @@ typedef	struct		s_ptr
 	int				top;
 	int				right;
 	int				zoom;
+	int			*res;
+	unsigned int	rgb;
 }					t_ptr;
 
 typedef	struct		s_coord

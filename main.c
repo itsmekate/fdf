@@ -23,6 +23,7 @@ int		deal_key(int key, t_ptr	*fdf)
 	if (key == 18)
 	{
 		fdf->Rz += 0.1;
+		
 		draw_map(*fdf);
 	}
 	if (key == 19)
@@ -57,12 +58,12 @@ int		deal_key(int key, t_ptr	*fdf)
 	}
 	else if (key == 24)
 	{
-		fdf->zoom += 10;
+		fdf->zoom += 1;
 		draw_map(*fdf);
 	}
 	else if (key == 27)
 	{
-		fdf->zoom -= 10;
+		fdf->zoom -= 1;
 		draw_map(*fdf);
 	}
 	// mlx_put_image_to_window(fdf->mlx_ptr, fdf->wdw_ptr, fdf->img_ptr, 0, 0);

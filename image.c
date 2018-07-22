@@ -6,11 +6,10 @@ void	put_pixel_image(t_ptr *fdf, int x, int y, int color)
 	int				bpp;
 	int				sl;
 	int				e;
-	char			*res;
-	unsigned int	rgb;
+	// unsigned int	rgb;
 	
-	res = mlx_get_data_addr(fdf->img_ptr, &bpp, &sl, &e);
-	rgb = mlx_get_color_value(fdf->mlx_ptr, color);
-	memcpy((void *)(res + y * sl + x * bpp / 8), (void *)&rgb, 4);
-	// printf("%d %d\n", bpp, sl);
+	fdf->res = (int*)mlx_get_data_addr(fdf->img_ptr, &bpp, &sl, &e);
+	fdf->rgb = mlx_get_color_value(fdf->mlx_ptr, color);
+	if (x > 0 && x < 1800 && y > 0 && y < 1200)
+		fdf->res[y * 1800 + x] = color;
 }
