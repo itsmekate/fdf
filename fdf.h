@@ -10,21 +10,6 @@
 #include <fcntl.h>
 #include <math.h>
 
-// typedef	struct	s_coord
-// {
-// 	int				height;
-// 	char			*color;
-// 	struct	s_coord	*next;
-// }					t_coord;
-
-// typedef	struct		s_fdf
-// {
-// 	// struct	s_coord	c;
-// 	char	*str;
-// 	struct	s_fdf	*next;
-
-// }					t_fdf;
-
 typedef	struct		s_ptr
 {
 	void			*mlx_ptr;
@@ -50,13 +35,6 @@ typedef	struct		s_coord
 	wchar_t			color;
 }					t_coord;
 
-// typedef struct 		s_lst
-// {
-// 	char			*str;
-// 	struct s_lst	*next;
-// }					t_lst;
-
-
 void				read_fdf(char **argv, t_ptr *fdf);
 void				draw_fdf(t_ptr fdf);
 int 				exit_x(void *par);
@@ -64,5 +42,7 @@ void				free_matrix(int **matrix);
 int					deal_key(int key, t_ptr *fdf);
 void				draw_map(t_ptr fdf);
 void				put_pixel_image(t_ptr *fdf, int x, int y, int color);
+t_coord				change_coords(t_coord c, t_ptr fdf);
+void				draw_line(t_ptr fdf, t_coord c0, t_coord c1);
 
 #endif
