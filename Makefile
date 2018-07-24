@@ -17,8 +17,8 @@ SRCS = main.c libft/libft.a draw.c read.c image.c
 LIB = -L libft/ -lft
 OBJ = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-
+CFLAGS = -Wall -Wextra -Werror
+# -fsanitize=address -g
 all: $(NAME)
 
 libft: 

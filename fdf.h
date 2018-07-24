@@ -39,6 +39,7 @@ typedef	struct		s_ptr
 	int				*res;
 	unsigned int	rgb;
 	int				z;
+	wchar_t			color;
 }					t_ptr;
 
 typedef	struct		s_coord
@@ -52,11 +53,12 @@ typedef	struct		s_coord
 void				read_fdf(char **argv, t_ptr *fdf);
 void				draw_fdf(t_ptr fdf);
 int					exit_x(void *par);
-void				free_matrix(int **matrix);
+void				free_matrix(t_ptr *fdf);
 int					deal_key(int key, t_ptr *fdf);
-void				draw_map(t_ptr fdf, int z);
+void				draw_map(t_ptr fdf);
 void				put_pixel_image(t_ptr *fdf, int x, int y, int color);
-t_coord				change_coords(t_coord c, t_ptr fdf);
+t_coord				change_coords(t_coord c, t_ptr fdf, t_coord center);
 void				draw_line(t_ptr fdf, t_coord c0, t_coord c1);
+void				make_bars(t_ptr fdf);
 
 #endif

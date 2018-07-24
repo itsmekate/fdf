@@ -25,17 +25,17 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_matrix(int **matrix)
+void	free_matrix(t_ptr *fdf)
 {
 	int i;
 
 	i = 0;
-	while (matrix[i])
+	while (i < fdf->h)
 	{
-		free(matrix[i]);
+		free(fdf->matrix[i]);
 		i++;
 	}
-	free(matrix);
+	// free(fdf->matrix);
 }
 
 int		array_size(char **arr)
@@ -65,6 +65,13 @@ int		add_line(char *tmp, t_ptr *fdf, int c)
 
 	j = 0;
 	split = ft_strsplit(tmp, ' ');
+	if (array_size(split) == 0)
+	{
+		ft_putendl("ERROR");
+		free_split(split);
+		free(tmp);
+		exit(0);
+	}
 	fdf->matrix[c] = (int*)malloc(sizeof(int) * array_size(split));
 	while (split[j])
 	{
@@ -73,10 +80,11 @@ int		add_line(char *tmp, t_ptr *fdf, int c)
 	}
 	if (fdf->w && j != fdf->w)
 	{
+		printf("%d\n", fdf->w);
 		ft_putendl("ERROR");
 		free_split(split);
 		free(tmp);
-		free_matrix(fdf->matrix);
+		free_matrix(fdf);
 		exit(0);
 	}
 	free_split(split);
@@ -108,11 +116,25 @@ void	read_fdf(char **argv, t_ptr *fdf)
 	int		fd;
 
 	fd = open(argv[1], O_RDONLY);
+	if (fd == 0 || fd == -1)
+	{
+		ft_putendl("ERROR");
+		exit(0);
+	}
 	list = (t_list*)malloc(sizeof(t_list));
-	get_next_line(fd, &tmp);
-	list = add_to_list(tmp);
-	head = list;
-	free(tmp);
+	if ((get_next_line(fd, &tmp)))
+	{
+		list = add_to_list(tmp);
+		head = list;
+		free(tmp);
+	}
+	else
+	{
+		ft_putendl("ERROR");
+		free(list);
+		free(fdf);
+		exit(0);
+	}
 	fdf->h = 1;
 	while (get_next_line(fd, &tmp) > 0)
 	{
@@ -124,4 +146,5 @@ void	read_fdf(char **argv, t_ptr *fdf)
 	fdf->w = 0;
 	from_list_to_fdf(fdf, head);
 	ft_list_clear(&head);
+	free(head);
 }
