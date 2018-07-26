@@ -41,7 +41,7 @@ void	clear_map(t_ptr fdf)
 	}
 }
 
-void	draw_map_more(t_ptr fdf, int i, t_coord center)
+t_coord	draw_map_more(t_ptr fdf, int i, t_coord center)
 {
 	int		j;
 	t_coord c0;
@@ -60,17 +60,14 @@ void	draw_map_more(t_ptr fdf, int i, t_coord center)
 			line(fdf, change(c0, fdf, center), change(c1, fdf, center));
 		j++;
 	}
-	if (fdf.w == j && fdf.h == i)
-	{
-		line(fdf, change(c0, fdf, center), change(c0, fdf, center));
-		put_pixel_image(&fdf, c0.x, c0.y, c0.color);
-	}
+	return (c0);
 }
 
 void	draw_map(t_ptr fdf)
 {
 	int		i;
 	t_coord	center;
+	t_coord c0;
 
 	i = 0;
 	center.x = 0;
@@ -80,8 +77,10 @@ void	draw_map(t_ptr fdf)
 		fdf.zoom = 0;
 	while (i < fdf.h)
 	{
-		draw_map_more(fdf, i, center);
+		c0 = draw_map_more(fdf, i, center);
 		i++;
 	}
+	line(fdf, change(c0, fdf, center), change(c0, fdf, center));
+	put_pixel_image(&fdf, c0.x, c0.y, c0.color);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.wdw_ptr, fdf.img_ptr, 0, 0);
 }

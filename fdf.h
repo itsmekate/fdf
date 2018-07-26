@@ -52,7 +52,7 @@ typedef	struct		s_coord
 
 void				read_fdf(char **argv, t_ptr *fdf);
 void				draw_fdf(t_ptr fdf);
-int					exit_x(void *par);
+int					exit_fdf(void *par);
 void				free_matrix(t_ptr *fdf);
 void				free_split(char **split);
 int					array_size(char **arr);

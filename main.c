@@ -28,6 +28,13 @@ wchar_t	choose_color(void)
 	return (color[r]);
 }
 
+int		exit_fdf(void *par)
+{
+	par = NULL;
+	exit(1);
+	return (0);
+}
+
 int		deal_key(int key, t_ptr *fdf)
 {
 	if (key == 53)
@@ -46,6 +53,8 @@ int		deal_key(int key, t_ptr *fdf)
 	(key == 24) ? fdf->zoom += 1 : 0;
 	(key == 27) ? fdf->zoom -= 1 : 0;
 	(key == 6) ? fdf->color = choose_color() : 0;
+	(key == 7 && fdf->z <= 40) ? fdf->z++ : 0;
+	(key == 8 && fdf->z > 0) ? fdf->z-- : 0;
 	make_bars(*fdf);
 	draw_map(*fdf);
 	mlx_put_image_to_window(fdf->mlx_ptr, fdf->wdw_ptr, fdf->img_ptr, 0, 0);

@@ -18,11 +18,11 @@ t_coord	change(t_coord c, t_ptr fdf, t_coord center)
 	t_coord	c1;
 	t_coord	c2;
 
-	c0.x = c.x;
+	c0.x = c.x + center.x;
 	c0.y = c.y * cos(fdf.rx) - c.z * sin(fdf.rx) + center.y;
 	c0.z = c.z * cos(fdf.rx) - c.y * sin(fdf.rx) + center.z;
 	c1.x = c0.x * cos(fdf.ry) - c0.z * sin(fdf.ry) + center.x;
-	c1.y = c0.y;
+	c1.y = c0.y + center.y;
 	c1.z = c0.z * cos(fdf.ry) + c0.x * sin(fdf.ry) + center.z;
 	c2.x = c1.x * cos(fdf.rz) + c1.y * sin(fdf.rz) + center.x;
 	c2.y = c1.y * cos(fdf.rz) - c1.x * sin(fdf.rz) + center.y;
@@ -90,10 +90,13 @@ void	make_bars(t_ptr fdf)
 
 void	draw_fdf(t_ptr fdf)
 {
-	fdf.rx = 8.3;
-	fdf.ry = 0.7;
-	fdf.rz = -0.4;
-	fdf.right = 0;
+	// fdf.rx = 8.3;
+	// fdf.ry = 0.7;
+	// fdf.rz = -0.4;
+	fdf.rx = 0;
+	fdf.ry = 0;
+	fdf.rz = 0;
+	fdf.right = 600;
 	fdf.top = 0;
 	fdf.zoom = 33;
 	fdf.z = 0;
@@ -105,5 +108,6 @@ void	draw_fdf(t_ptr fdf)
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.wdw_ptr, fdf.img_ptr, 0, 0);
 	make_bars(fdf);
 	mlx_hook(fdf.wdw_ptr, 2, 5, deal_key, &fdf);
+	mlx_hook(fdf.wdw_ptr, 17, 1L << 17,  exit_fdf, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 }

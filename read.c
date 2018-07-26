@@ -81,7 +81,7 @@ void	read_fdf(char **argv, t_ptr *fdf)
 		exit(0);
 	}
 	list = (t_list**)malloc(sizeof(t_list*));
-	if ((get_next_line(fd, &tmp)))
+	if (get_next_line(fd, &tmp) > 0)
 	{
 		add_to_list_first(tmp, list);
 		head = *list;
