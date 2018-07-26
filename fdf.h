@@ -54,11 +54,21 @@ void				read_fdf(char **argv, t_ptr *fdf);
 void				draw_fdf(t_ptr fdf);
 int					exit_x(void *par);
 void				free_matrix(t_ptr *fdf);
+void				free_split(char **split);
+int					array_size(char **arr);
+int					add_line(char *tmp, t_ptr *fdf, int c);
+void				ft_clear(t_list **list);
+void				clear_map(t_ptr fdf);
+void				free_and_exit(char *tmp, char **split);
 int					deal_key(int key, t_ptr *fdf);
 void				draw_map(t_ptr fdf);
 void				put_pixel_image(t_ptr *fdf, int x, int y, int color);
-t_coord				change_coords(t_coord c, t_ptr fdf, t_coord center);
-void				draw_line(t_ptr fdf, t_coord c0, t_coord c1);
+t_coord				change(t_coord c, t_ptr fdf, t_coord center);
+void				line(t_ptr fdf, t_coord c0, t_coord c1);
 void				make_bars(t_ptr fdf);
+t_coord				set_c0_1(t_ptr fdf, int i, int j, t_coord c0);
+t_coord				set_c1_1(t_ptr fdf, int i, int j, t_coord c1);
+t_coord				set_c0_2(t_ptr fdf, int i, int j, t_coord c0);
+t_coord				set_c1_2(t_ptr fdf, int i, int j, t_coord c1);
 
 #endif

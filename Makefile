@@ -12,7 +12,8 @@
 
 NAME = a.out
 
-SRCS = main.c libft/libft.a draw.c read.c image.c
+SRCS = main.c libft/libft.a draw.c read.c image.c \
+free.c set_coordinates.c \
 
 LIB = -L libft/ -lft
 OBJ = $(SRCS:.c=.o)

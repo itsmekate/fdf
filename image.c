@@ -19,7 +19,6 @@ void	put_pixel_image(t_ptr *fdf, int x, int y, int color)
 	int	e;
 
 	fdf->res = (int*)mlx_get_data_addr(fdf->img_ptr, &bpp, &sl, &e);
-	fdf->rgb = mlx_get_color_value(fdf->mlx_ptr, color);
 	if (x > 0 && x < 1800 && y > 0 && y < 1050)
 		fdf->res[y * 1800 + x] = color;
 }
@@ -42,47 +41,47 @@ void	clear_map(t_ptr fdf)
 	}
 }
 
-void	draw_map(t_ptr fdf)
+void	draw_map_more(t_ptr fdf, int i, t_coord center)
 {
-	int		i;
 	int		j;
 	t_coord c0;
 	t_coord c1;
+
+	j = 0;
+	while (j < fdf.w)
+	{
+		c0 = set_c0_1(fdf, i, j, c0);
+		c1 = set_c1_1(fdf, i, j, c1);
+		if (fdf.w - 1 != j)
+			line(fdf, change(c0, fdf, center), change(c1, fdf, center));
+		c0 = set_c0_2(fdf, i, j, c0);
+		c1 = set_c1_2(fdf, i, j, c1);
+		if (fdf.h - 1 != i)
+			line(fdf, change(c0, fdf, center), change(c1, fdf, center));
+		j++;
+	}
+	if (fdf.w == j && fdf.h == i)
+	{
+		line(fdf, change(c0, fdf, center), change(c0, fdf, center));
+		put_pixel_image(&fdf, c0.x, c0.y, c0.color);
+	}
+}
+
+void	draw_map(t_ptr fdf)
+{
+	int		i;
 	t_coord	center;
 
 	i = 0;
 	center.x = 0;
 	center.y = 0;
 	center.z = 0;
-	clear_map(fdf);
+	if (fdf.zoom < 0)
+		fdf.zoom = 0;
 	while (i < fdf.h)
 	{
-		j = 0;
-		while (j < fdf.w)
-		{
-			c0.z = fdf.matrix[i][j];
-			if (fdf.w - 1 != j)
-				c1.z = fdf.matrix[i][j + 1];
-			c0.x = i * fdf.zoom + fdf.right;
-			c1.x = i * fdf.zoom + fdf.right;
-			c0.y = j * fdf.zoom + fdf.top;
-			c1.y = (j * fdf.zoom) + fdf.zoom + fdf.top;
-			if (fdf.w - 1 != j)
-				draw_line(fdf, change_coords(c0, fdf, center), change_coords(c1, fdf, center));
-			c0.z = fdf.matrix[i][j];
-			if (fdf.h - 1 != i)
-				c1.z = fdf.matrix[i + 1][j];
-			c0.x = i * fdf.zoom + fdf.right;
-			c1.x = (i * fdf.zoom) + fdf.zoom + fdf.right;
-			c0.y = j * fdf.zoom + fdf.top;
-			c1.y = j * fdf.zoom + fdf.top;
-			if (fdf.h - 1 != i)
-				draw_line(fdf, change_coords(c0, fdf, center), change_coords(c1, fdf, center));
-			j++;
-		}
+		draw_map_more(fdf, i, center);
 		i++;
 	}
-	draw_line(fdf, change_coords(c0, fdf, center), change_coords(c0, fdf, center));
-	put_pixel_image(&fdf, c0.x, c0.y, c0.color);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.wdw_ptr, fdf.img_ptr, 0, 0);
 }

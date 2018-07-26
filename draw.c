@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-t_coord	change_coords(t_coord c, t_ptr fdf, t_coord center)
+t_coord	change(t_coord c, t_ptr fdf, t_coord center)
 {
 	t_coord	c0;
 	t_coord	c1;
@@ -30,7 +30,7 @@ t_coord	change_coords(t_coord c, t_ptr fdf, t_coord center)
 	return (c2);
 }
 
-void	draw_line(t_ptr fdf, t_coord c0, t_coord c1)
+void	line(t_ptr fdf, t_coord c0, t_coord c1)
 {
 	t_coord d;
 	int		signx;
@@ -61,29 +61,31 @@ void	draw_line(t_ptr fdf, t_coord c0, t_coord c1)
 
 void	make_bars(t_ptr fdf)
 {
-	int k;
-	int l;
+	int		k;
+	int		l;
+	void	*wp;
+	void	*mp;
 
 	k = 0;
-	while (k < 1800)
+	mp = fdf.mlx_ptr;
+	wp = fdf.wdw_ptr;
+	while (k++ < 1800)
 	{
-		l = 1050;
-		while (l < 1200)
+		l = 1049;
+		while (l++ < 1200)
 		{
 			mlx_pixel_put(fdf.mlx_ptr, fdf.wdw_ptr, k, l, fdf.color);
-			l++;
 		}
-		k++;
 	}
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 10, 1061, 0xFFFFFF, "To zoom use: +/-");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 10, 1081, 0xFFFFFF, "To move use:");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 150, 1081, 0xFFFFFF, "W - up");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 150, 1101, 0xFFFFFF, "S - down");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 150, 1121, 0xFFFFFF, "D - right");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 150, 1141, 0xFFFFFF, "A - left");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 1590, 1081, 0xFFFFFF, "Use 1 to rotate by Z");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 1590, 1101, 0xFFFFFF, "Use 2 to rotate by X");
-	mlx_string_put(fdf.mlx_ptr, fdf.wdw_ptr, 1590, 1121, 0xFFFFFF, "Use 3 to rotate by Y");
+	mlx_string_put(mp, wp, 10, 1061, 0xFFFFFF, "To zoom use: +/-");
+	mlx_string_put(mp, wp, 10, 1081, 0xFFFFFF, "To move use:");
+	mlx_string_put(mp, wp, 150, 1081, 0xFFFFFF, "W - up");
+	mlx_string_put(mp, wp, 150, 1101, 0xFFFFFF, "S - down");
+	mlx_string_put(mp, wp, 150, 1121, 0xFFFFFF, "D - right");
+	mlx_string_put(mp, wp, 150, 1141, 0xFFFFFF, "A - left");
+	mlx_string_put(mp, wp, 1590, 1081, 0xFFFFFF, "Use 1 to rotate by Z");
+	mlx_string_put(mp, wp, 1590, 1101, 0xFFFFFF, "Use 2 to rotate by X");
+	mlx_string_put(mp, wp, 1590, 1121, 0xFFFFFF, "Use 3 to rotate by Y");
 }
 
 void	draw_fdf(t_ptr fdf)
@@ -91,8 +93,8 @@ void	draw_fdf(t_ptr fdf)
 	fdf.rx = 8.3;
 	fdf.ry = 0.7;
 	fdf.rz = -0.4;
-	fdf.right = 1460;
-	fdf.top = -620;
+	fdf.right = 0;
+	fdf.top = 0;
 	fdf.zoom = 33;
 	fdf.z = 0;
 	fdf.color = 0x123456;
