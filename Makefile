@@ -10,10 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = a.out
+NAME = fdf
 
 SRCS = main.c libft/libft.a draw.c read.c image.c \
-free.c set_coordinates.c \
+free.c set_coordinates.c add.c\
 
 LIB = -L libft/ -lft
 OBJ = $(SRCS:.c=.o)

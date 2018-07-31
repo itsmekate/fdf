@@ -70,5 +70,7 @@ t_coord				set_c0_1(t_ptr fdf, int i, int j, t_coord c0);
 t_coord				set_c1_1(t_ptr fdf, int i, int j, t_coord c1);
 t_coord				set_c0_2(t_ptr fdf, int i, int j, t_coord c0);
 t_coord				set_c1_2(t_ptr fdf, int i, int j, t_coord c1);
-
+void				add_to_list_first(char *str, t_list **list);
+void				add_to_list(char *str, t_list **list);
+int					add_line(char *tmp, t_ptr *fdf, int c);
 #endif

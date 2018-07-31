@@ -29,41 +29,30 @@ void	from_list_to_fdf(t_ptr *fdf, t_list *list)
 	}
 }
 
-void	add_to_list_first(char *str, t_list **list)
+void	read_fdf_more(t_ptr *fdf, t_list *head, t_list **list, int fd)
 {
-	(*list) = (t_list*)malloc(sizeof(t_list));
-	(*list)->content = ft_strdup(str);
-	(*list)->next = NULL;
-}
+	char	*tmp;
 
-void	add_to_list(char *str, t_list **list)
-{
-	while ((*list)->next)
-		*list = (*list)->next;
-	(*list)->next = (t_list*)malloc(sizeof(t_list));
-	(*list)->next->content = ft_strdup(str);
-	(*list)->next->next = NULL;
-}
-
-int		add_line(char *tmp, t_ptr *fdf, int c)
-{
-	int		j;
-	char	**split;
-
-	j = 0;
-	split = ft_strsplit(tmp, ' ');
-	if (array_size(split) == 0)
-		free_and_exit(tmp, split);
-	fdf->matrix[c] = (int*)malloc(sizeof(int) * array_size(split));
-	while (split[j])
+	fdf->h = 1;
+	while (get_next_line(fd, &tmp) > 0)
 	{
-		fdf->matrix[c][j] = ft_atoi(split[j]);
-		j++;
+		add_to_list(tmp, list);
+		fdf->h++;
+		free(tmp);
 	}
-	if (fdf->w && j != fdf->w)
-		free_and_exit(tmp, split);
-	free_split(split);
-	return (j);
+	fdf->w = 0;
+	from_list_to_fdf(fdf, head);
+	ft_clear(&head);
+	free(list);
+	free(head);
+}
+
+void	free_and_error(t_ptr *fdf, t_list **list)
+{
+	ft_putendl("ERROR");
+	free(list);
+	free(fdf);
+	exit(0);
 }
 
 void	read_fdf(char **argv, t_ptr *fdf)
@@ -74,6 +63,7 @@ void	read_fdf(char **argv, t_ptr *fdf)
 	int		fd;
 
 	list = NULL;
+	head = NULL;
 	fd = open(argv[1], O_RDONLY);
 	if (fd == 0 || fd == -1)
 	{
@@ -88,22 +78,6 @@ void	read_fdf(char **argv, t_ptr *fdf)
 		free(tmp);
 	}
 	else
-	{
-		ft_putendl("ERROR");
-		free(list);
-		free(fdf);
-		exit(0);
-	}
-	fdf->h = 1;
-	while (get_next_line(fd, &tmp) > 0)
-	{
-		add_to_list(tmp, list);
-		fdf->h++;
-		free(tmp);
-	}
-	fdf->w = 0;
-	from_list_to_fdf(fdf, head);
-	ft_clear(&head);
-	free(list);
-	free(head);
+		free_and_error(fdf, list);
+	read_fdf_more(fdf, head, list, fd);
 }

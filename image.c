@@ -70,8 +70,8 @@ void	draw_map(t_ptr fdf)
 	t_coord c0;
 
 	i = 0;
-	center.x = 0;
-	center.y = 0;
+	center.x = 900;
+	center.y = 525;
 	center.z = 0;
 	if (fdf.zoom < 0)
 		fdf.zoom = 0;

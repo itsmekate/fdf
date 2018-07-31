@@ -14,10 +14,10 @@
 
 wchar_t	choose_color(void)
 {
-	wchar_t color[7];
+	wchar_t color[8];
 	int		r;
 
-	r = rand() % 7;
+	r = rand() % 8;
 	color[0] = 0xF56FA1;
 	color[1] = 0xA40000;
 	color[2] = 0xF64A8A;
@@ -25,6 +25,7 @@ wchar_t	choose_color(void)
 	color[4] = 0x44D7A8;
 	color[5] = 0xA9A9A9;
 	color[6] = 0x68A0B0;
+	color[7] = 0x123456;
 	return (color[r]);
 }
 

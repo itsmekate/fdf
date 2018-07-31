@@ -12,20 +12,20 @@
 
 #include "fdf.h"
 
-t_coord	change(t_coord c, t_ptr fdf, t_coord center)
+t_coord	change(t_coord c, t_ptr fdf, t_coord ctr)
 {
 	t_coord	c0;
 	t_coord	c1;
 	t_coord	c2;
 
-	c0.x = c.x + center.x;
-	c0.y = c.y * cos(fdf.rx) - c.z * sin(fdf.rx) + center.y;
-	c0.z = c.z * cos(fdf.rx) - c.y * sin(fdf.rx) + center.z;
-	c1.x = c0.x * cos(fdf.ry) - c0.z * sin(fdf.ry) + center.x;
-	c1.y = c0.y + center.y;
-	c1.z = c0.z * cos(fdf.ry) + c0.x * sin(fdf.ry) + center.z;
-	c2.x = c1.x * cos(fdf.rz) + c1.y * sin(fdf.rz) + center.x;
-	c2.y = c1.y * cos(fdf.rz) - c1.x * sin(fdf.rz) + center.y;
+	c0.x = c.x;
+	c0.y = (c.y - ctr.y) * cos(fdf.rx) - (c.z - ctr.z) * sin(fdf.rx) + ctr.y;
+	c0.z = (c.z - ctr.z) * cos(fdf.rx) - (c.y - ctr.y) * sin(fdf.rx) + ctr.z;
+	c1.x = (c0.x - ctr.x) * cos(fdf.ry) - (c0.z - ctr.z) * sin(fdf.ry) + ctr.x;
+	c1.y = c0.y;
+	c1.z = (c0.z - ctr.z) * cos(fdf.ry) + (c0.x - ctr.x) * sin(fdf.ry) + ctr.z;
+	c2.x = (c1.x - ctr.x) * cos(fdf.rz) + (c1.y - ctr.y) * sin(fdf.rz) + ctr.x;
+	c2.y = (c1.y - ctr.y) * cos(fdf.rz) - (c1.x - ctr.x) * sin(fdf.rz) + ctr.y;
 	c2.color = fdf.color;
 	return (c2);
 }
@@ -73,30 +73,26 @@ void	make_bars(t_ptr fdf)
 	{
 		l = 1049;
 		while (l++ < 1200)
-		{
 			mlx_pixel_put(fdf.mlx_ptr, fdf.wdw_ptr, k, l, fdf.color);
-		}
 	}
 	mlx_string_put(mp, wp, 10, 1061, 0xFFFFFF, "To zoom use: +/-");
 	mlx_string_put(mp, wp, 10, 1081, 0xFFFFFF, "To move use:");
-	mlx_string_put(mp, wp, 150, 1081, 0xFFFFFF, "W - up");
-	mlx_string_put(mp, wp, 150, 1101, 0xFFFFFF, "S - down");
-	mlx_string_put(mp, wp, 150, 1121, 0xFFFFFF, "D - right");
-	mlx_string_put(mp, wp, 150, 1141, 0xFFFFFF, "A - left");
-	mlx_string_put(mp, wp, 1590, 1081, 0xFFFFFF, "Use 1 to rotate by Z");
-	mlx_string_put(mp, wp, 1590, 1101, 0xFFFFFF, "Use 2 to rotate by X");
-	mlx_string_put(mp, wp, 1590, 1121, 0xFFFFFF, "Use 3 to rotate by Y");
+	mlx_string_put(mp, wp, 150, 1081, 0xFFFFFF, "W/S by X");
+	mlx_string_put(mp, wp, 150, 1101, 0xFFFFFF, "D/A by Y");
+	mlx_string_put(mp, wp, 1550, 1081, 0xFFFFFF, "Use 1 to rotate by X");
+	mlx_string_put(mp, wp, 1550, 1101, 0xFFFFFF, "Use 2 to rotate by Y");
+	mlx_string_put(mp, wp, 1550, 1121, 0xFFFFFF, "Use 3 to rotate by Z");
+	mlx_string_put(mp, wp, 1550, 1141, 0xFFFFFF, "Use Z to change color");
+	mlx_string_put(mp, wp, 1190, 1081, 0xFFFFFF, "Use X to increase height");
+	mlx_string_put(mp, wp, 1190, 1101, 0xFFFFFF, "Use C to decrease height");
 }
 
 void	draw_fdf(t_ptr fdf)
 {
-	// fdf.rx = 8.3;
-	// fdf.ry = 0.7;
-	// fdf.rz = -0.4;
-	fdf.rx = 0;
-	fdf.ry = 0;
-	fdf.rz = 0;
-	fdf.right = 600;
+	fdf.rx = 8.3;
+	fdf.ry = 0.7;
+	fdf.rz = -0.4;
+	fdf.right = 700;
 	fdf.top = 0;
 	fdf.zoom = 33;
 	fdf.z = 0;
@@ -108,6 +104,6 @@ void	draw_fdf(t_ptr fdf)
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.wdw_ptr, fdf.img_ptr, 0, 0);
 	make_bars(fdf);
 	mlx_hook(fdf.wdw_ptr, 2, 5, deal_key, &fdf);
-	mlx_hook(fdf.wdw_ptr, 17, 1L << 17,  exit_fdf, &fdf);
+	mlx_hook(fdf.wdw_ptr, 17, 1L << 17, exit_fdf, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 }
